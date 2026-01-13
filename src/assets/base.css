@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: var(--primary);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-card-bg: var(--surface);
+
+  --color-gray-900: #0d0d0d;
+  --color-gray-800: #161616;
+  --color-gray-700: #262626;
+  --color-gray-400: #a3a3a3;
+  --color-gray-100: #ffffff;
+
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  --font-sans: 'Inter', 'sans-serif';
+
+  --radius-card: 16px;
+  --radius-base: 12px;
+}
+
+:root {
+  /* Light Mode */
+  --primary: #f9fafb;
+  --surface: #ffffff;
+  --accent: #051766; /* Dark Blue */
+  --border: #f1f3f5;
+
+  /* Text Colors for Light Mode */
+  --text-main: #0d0d0d;
+  --text-muted: #a3a3a3;
+
+  /* Additional overrides for light mode if needed */
+  color-scheme: light;
+}
+
+.dark {
+  /* Dark Mode */
+  --primary: #0d0d0d;
+  --surface: #1e1e1e;
+  --accent: #3b82f6; /* Blue 500 */
+  --border: #222222;
+
+  /* Text Colors for Dark Mode */
+  --text-main: #ffffff;
+  --text-muted: #a3a3a3;
+
+  color-scheme: dark;
+}
+
+/* Base Styles */
+body {
+  background-color: var(--primary);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.tabulator {
+  font-family: inherit;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.tabulator .tabulator-header {
+  background-color: var(--surface) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-top: none !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted) !important;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  background-color: var(--surface) !important;
+  border-right: none !important;
+}
+
+.tabulator .tabulator-row {
+  background-color: var(--surface) !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text-main) !important;
+}
+
+.tabulator .tabulator-row.tabulator-row-even {
+  background-color: var(--surface) !important; /* Keep uniform or stripe if needed */
+}
+
+.tabulator .tabulator-row:hover {
+  background-color: var(--color-gray-800) !important;
+}
+
+.tabulator-row .tabulator-cell {
+  border-right: none !important;
+  padding-top: 1.25rem !important;
+  padding-bottom: 1.25rem !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Hide Footer/Pagination if handled externally or style it */
+.tabulator .tabulator-footer {
+  background-color: transparent !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+.tabulator .tabulator-footer .tabulator-page {
+  border: 1px solid var(--border) !important;
+  color: var(--text-muted) !important;
+  border-radius: 4px;
+}
+
+.tabulator .tabulator-footer .tabulator-page.active {
+  background-color: var(--color-gray-800) !important;
+  color: var(--accent) !important;
+  font-weight: bold;
+}
