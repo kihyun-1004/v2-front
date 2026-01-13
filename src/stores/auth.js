@@ -3,9 +3,12 @@ import api from '@/api/api'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    token: localStorage.getItem('token') || null,
-    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+    // user: JSON.parse(localStorage.getItem('user')) || null,
+    // token: localStorage.getItem('token') || null,
+    // isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+    user: { id: 'admin', name: '테스트 관리자' }, // UI 테스트용 임시 데이터
+    token: 'fake-jwt-token',
+    isLoggedIn: true,
     error: null,
     isLoading: false,
   }),

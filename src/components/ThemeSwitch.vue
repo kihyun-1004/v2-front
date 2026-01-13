@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Sun, Moon } from 'lucide-vue-next'
 
 const isDark = ref(false)
@@ -10,13 +10,18 @@ const toggleTheme = () => {
 }
 
 const updateTheme = () => {
+  const html = document.documentElement
+  
   if (isDark.value) {
-    document.documentElement.classList.add('dark')
+    html.classList.add('dark')
     localStorage.setItem('theme', 'dark')
   } else {
-    document.documentElement.classList.remove('dark')
+    html.classList.remove('dark')
     localStorage.setItem('theme', 'light')
   }
+  
+  // 강제 리플로우를 통해 CSS 변수 즉시 적용
+  void html.offsetHeight
 }
 
 onMounted(() => {
@@ -34,9 +39,9 @@ onMounted(() => {
 
 <template>
   <button @click="toggleTheme"
-    class="p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400"
+    class="p-3 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:scale-110 active:scale-95"
     aria-label="Toggle Theme">
-    <Sun v-if="isDark" class="w-5 h-5" />
-    <Moon v-else class="w-5 h-5" />
+    <Sun v-if="isDark" class="w-5 h-5 transition-transform duration-300" :class="{'rotate-180': isDark}" />
+    <Moon v-else class="w-5 h-5 transition-transform duration-300" />
   </button>
 </template>

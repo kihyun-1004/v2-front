@@ -39,7 +39,7 @@ const percentageSpent = computed(() => {
         </div>
 
         <div class="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-          <div class="h-full rounded-full transition-all duration-500 ease-out" :class="item.color"
+          <div class="h-full rounded-full transition-all duration-700 ease-out" :class="item.color"
             :style="{ width: `${(item.spent / item.limit) * 100}%` }"></div>
         </div>
 

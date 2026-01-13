@@ -38,7 +38,7 @@ const handleLogin = async () => {
       <!-- Logo & Header -->
       <div class="text-center mb-8">
         <img :src="logoKoreanAir" alt="Korean Air"
-          class="h-10 w-auto mx-auto mb-6 dark:brightness-200 dark:contrast-100 dark:invert-[0.9] dark:hue-rotate-180" />
+          class="h-10 w-auto mx-auto mb-6" />
         <h1 class="text-2xl font-bold text-main tracking-tight">Welcome back</h1>
         <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">Please enter your details to sign in.</p>
       </div>

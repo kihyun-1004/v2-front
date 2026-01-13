@@ -41,7 +41,7 @@ const userFormatter = (cell) => {
   // Brief: Avatar + Name Inline
   return `
     <div class="flex items-center gap-3">
-      <img src="${user.avatar}" class="w-8 h-8 rounded-full bg-gray-700" alt="${user.name}">
+      <img src="${user.avatar}" class="w-8 h-8 rounded-full bg-gray-700" alt="Avatar of ${user.name}">
       <div class="flex flex-col">
         <span class="text-sm font-medium text-main dark:text-gray-200">${user.name}</span>
         <span class="text-xs text-muted dark:text-gray-400">${user.email}</span>
@@ -88,7 +88,7 @@ watch(() => props.data, (newData) => {
   <div class="bg-surface rounded-card border border-border p-6 overflow-hidden">
     <div class="flex items-center justify-between mb-4">
       <h3 class="font-bold text-lg text-main">Latest Transactions</h3>
-      <button class="text-sm text-blue-500 hover:text-blue-400 font-medium">View All</button>
+      <button @click="$emit('view-all')" class="text-sm text-blue-500 hover:text-blue-400 font-medium transition-colors">View All</button>
     </div>
 
     <div ref="tableRef" class="w-full"></div>

@@ -17,6 +17,7 @@ coverage
 # Editor directories and files
 .vscode/
 .claude/
+.kombai/
 .agent/
 .idea
 *.suo

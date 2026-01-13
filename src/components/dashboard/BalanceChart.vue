@@ -17,6 +17,7 @@ const props = defineProps({
 
 const chartCanvas = ref(null)
 let chartInstance = null
+const isLoading = ref(true)
 
 // Helper to get CSS variable values
 const getCssVar = (name) => {
@@ -70,6 +71,10 @@ const renderChart = () => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: 1000,
+        easing: 'easeInOutQuart'
+      },
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -112,7 +117,10 @@ const renderChart = () => {
 // Watch for theme changes to re-render chart
 // We can use a MutationObserver on document.documentElement
 onMounted(() => {
-  renderChart()
+  setTimeout(() => {
+    renderChart()
+    isLoading.value = false
+  }, 300)
 
   const observer = new MutationObserver(() => {
     // Re-render to update colors
@@ -130,15 +138,24 @@ onMounted(() => {
   <div class="bg-surface rounded-card border border-border p-6 flex flex-col h-[400px]">
     <div class="flex items-center justify-between mb-6">
       <h3 class="font-bold text-lg text-main">Balance History</h3>
+      <label for="chart-period" class="sr-only">Select time period</label>
       <select
-        class="bg-transparent border border-border rounded-lg text-sm px-3 py-1 text-gray-500 focus:outline-none focus:border-blue-500/50">
+        id="chart-period"
+        class="bg-transparent border border-border rounded-lg text-sm px-3 py-1 text-gray-500 focus:outline-none focus:border-blue-500/50 cursor-pointer">
         <option>Last 6 Months</option>
         <option>Last Year</option>
       </select>
     </div>
 
     <div class="flex-1 w-full relative">
-      <canvas ref="chartCanvas"></canvas>
+      <!-- Loading Skeleton -->
+      <div v-if="isLoading" class="absolute inset-0 flex items-center justify-center bg-surface/50 backdrop-blur-sm rounded-lg">
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <span class="text-sm text-gray-500">Loading chart...</span>
+        </div>
+      </div>
+      <canvas ref="chartCanvas" :class="{'opacity-0': isLoading, 'opacity-100 transition-opacity duration-500': !isLoading}"></canvas>
     </div>
   </div>
 </template>

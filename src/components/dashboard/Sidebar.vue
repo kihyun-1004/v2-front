@@ -36,6 +36,7 @@ const navigation = [
 
 const settingsItems = [
   { name: 'User Management', icon: Users, href: '/settings/users', current: route.path === '/settings/users' },
+  { name: 'Example 1', icon: Settings, href: '/settings/example1', current: route.path === '/settings/example1' },
   { name: 'General Settings', icon: Settings, href: '#', current: false },
 ]
 
@@ -60,9 +61,9 @@ const navigateTo = (href) => {
     <!-- Mobile Hamburger -->
     <div
       class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-surface border-b border-border p-4 flex justify-between items-center text-main">
-      <img :src="logoKoreanAir" alt="Korean Air"
-        class="h-6 w-auto dark:brightness-200 dark:contrast-100 dark:invert-[0.9] dark:hue-rotate-180" />
-      <button @click="toggleMobileMenu" class="p-2">
+      <img :src="logoKoreanAir" alt="Korean Air Logo"
+        class="h-6 w-auto" />
+      <button @click="toggleMobileMenu" class="p-2" aria-label="Toggle mobile menu">
         <Menu v-if="!isMobileMenuOpen" class="w-6 h-6" />
         <X v-else class="w-6 h-6" />
       </button>
@@ -76,8 +77,8 @@ const navigateTo = (href) => {
     ]">
       <!-- Logo -->
       <div class="h-16 flex items-center px-6 border-b border-border cursor-pointer" @click="navigateTo('/dashboard')">
-        <img :src="logoKoreanAir" alt="Korean Air"
-          class="h-8 w-auto dark:brightness-200 dark:contrast-100 dark:invert-[0.9] dark:hue-rotate-180" />
+        <img :src="logoKoreanAir" alt="Korean Air Logo"
+          class="h-8 w-auto" />
       </div>
 
       <!-- Navigation -->
@@ -131,7 +132,7 @@ const navigateTo = (href) => {
           <div class="flex items-center overflow-hidden">
             <img class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 text-[#051766] font-bold text-xs" 
               src="https://api.dicebear.com/7.x/avataaars/svg?seed=TEST1"
-              alt="" />
+              :alt="`${authStore.user?.name || 'User'} avatar`" />
             <div class="ml-3 min-w-0">
               <p class="text-sm font-medium text-main truncate">{{ authStore.user?.name || 'User' }}</p>
               <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ authStore.user?.userSe === 'USR' ? 'Employee' : 'Admin' }}</p>
@@ -150,11 +151,18 @@ const navigateTo = (href) => {
     </aside>
 
     <!-- Overlay for mobile -->
-    <div v-if="isMobileMenuOpen" @click="toggleMobileMenu"
-      class="fixed inset-0 bg-black/50 z-30 lg:hidden glass-overlay"></div>
+    <transition name="fade">
+      <div v-if="isMobileMenuOpen" @click="toggleMobileMenu"
+        class="fixed inset-0 bg-black/50 z-30 lg:hidden backdrop-blur-sm"></div>
+    </transition>
   </div>
 </template>
 
 <style scoped>
-/* Ensure sidebar handles its own bg colors correctly via utility classes */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 </style>

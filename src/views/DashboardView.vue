@@ -19,6 +19,8 @@ import { useAuthStore } from '../stores/auth'
 const router = useRouter()
 const authStore = useAuthStore()
 const isSidebarCollapsed = ref(false)
+const searchQuery = ref('')
+
 const toggleSidebar = () => {
   isSidebarCollapsed.value = !isSidebarCollapsed.value
 }
@@ -26,6 +28,13 @@ const toggleSidebar = () => {
 const handleLogout = () => {
   authStore.logout()
   router.push('/login')
+}
+
+const handleSearch = () => {
+  if (searchQuery.value.trim()) {
+    console.log('Searching for:', searchQuery.value)
+    // TODO: Implement search functionality
+  }
 }
 </script>
 
@@ -43,41 +52,43 @@ const handleLogout = () => {
         <div class="flex items-center gap-4">
           <!-- Desktop Sidebar Toggle -->
           <button @click="toggleSidebar"
+            aria-label="Toggle sidebar"
             class="hidden lg:flex p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
             <Menu class="w-5 h-5" />
           </button>
 
-          <!-- Search Bar (Subtler) -->
+          <!-- Search Bar -->
           <div
-            class="hidden md:flex items-center bg-gray-50 dark:bg-gray-800/50 border border-border rounded-lg px-3 py-2 w-96 focus-within:ring-2 focus-within:ring-blue-500/50 dark:focus-within:ring-accent/50 transition-all">
-            <Search class="w-4 h-4 text-gray-400 mr-2" />
-            <input type="text" placeholder="Search..."
+            class="flex items-center bg-gray-50 dark:bg-gray-800/50 border border-border rounded-lg px-3 py-2 w-full max-w-96 focus-within:ring-2 focus-within:ring-blue-500/50 dark:focus-within:ring-accent/50 transition-all">
+            <Search class="w-4 h-4 text-gray-400 mr-2 flex-shrink-0" />
+            <input 
+              v-model="searchQuery"
+              type="text" 
+              placeholder="Search..."
+              @keyup.enter="handleSearch"
+              aria-label="Search"
               class="bg-transparent border-none outline-none text-main placeholder-gray-400 w-full text-sm" />
           </div>
         </div>
 
-        <!-- Mobile Title (Visible only when sidebar hidden/mobile) -->
-        <div class="md:hidden text-lg font-bold text-main ml-10 lg:ml-0">
-          Dashboard
-        </div>
-
         <!-- Right Actions -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
           <button
-            class="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+            aria-label="Notifications"
+            class="relative p-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
             <Bell class="w-5 h-5" />
-            <span class="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full border-2 border-surface"></span>
+            <span class="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full border-2 border-surface" aria-hidden="true"></span>
           </button>
           <button @click="handleLogout"
-            class="p-2 text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 rounded-full transition-colors"
-            title="Logout">
+            aria-label="Logout"
+            class="p-3 text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 rounded-full transition-colors">
             <LogOut class="w-5 h-5" />
           </button>
         </div>
       </header>
 
       <!-- Content Grid -->
-      <div class="p-6 space-y-6 flex-1 max-w-[1440px] mx-auto w-full">
+      <div class="p-6 space-y-6 flex-1 w-full">
 
         <!-- KPI Row -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
